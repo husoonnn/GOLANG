@@ -13,7 +13,10 @@ import "fmt"
 import "strings"
 
 func main(){
-	var str string = "iuiygaygnn"
+	var str string
+	fmt.Print("Enter the String: ")
+    fmt.Scan(&str)
+	str = strings.ToLower(str)
 	if strings.HasPrefix(str, "i") == true && strings.Contains(str,"a") == true && strings.HasSuffix(str, "n")==true{
 		fmt.Println("Found!")
 	} else {
