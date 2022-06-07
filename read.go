@@ -16,8 +16,41 @@ first and last names found in each struct.
 package main
 import(
 	"fmt"
+	//"ioutil"
+	"os"
+	"bufio"
+	"strings"
 )
-
+type Person struct{
+	fname string
+	lname string
+}
 func main(){
-	fmt.Println("Hello")
+	slice := make([]Person, 0, 2)
+	var input string
+	fmt.Println("Input file name: ")
+	fmt.Scan(&input)
+	f, err := os.Open(input)
+	if err != nil {
+        fmt.Println(err)
+    }
+	defer f.Close()
+    // read the file word by word using scanner
+    scanner := bufio.NewScanner(f)
+    //scanner.Split(bufio.ScanWords)
+
+    for scanner.Scan() {
+        // do something with a word
+        s := strings.Split(scanner.Text(), " ")
+		var person Person
+		person.fname, person.lname = s[0], s[1]
+		slice = append(slice, person)
+    }
+	if err := scanner.Err(); err != nil {
+        fmt.Println(err)
+    }
+	//to access each slice accordinglyfmt.Println(slice[2].lname)
+	for _, v := range slice {
+		fmt.Printf("First name: %s, Last name: %s \n", v.fname, v.lname)
+	}
 }
